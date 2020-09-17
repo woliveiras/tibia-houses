@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Comparator from './ui/organisms/Comparator'
+import Comparator from './Comparator'
 
 function App() {
   return (
