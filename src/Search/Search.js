@@ -6,7 +6,6 @@ import SearchResults from './SearchResults';
 const Search = props => {
     const [housesData, setHousesData] = useState({
         world: 'carregando...',
-        town: 'carregando...',
         houses: []
     })
 

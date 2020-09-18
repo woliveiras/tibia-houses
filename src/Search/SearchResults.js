@@ -7,7 +7,7 @@ const SearchResults = props => {
         <div>
             {data && (
                 <>
-                    <h1>Casas Tibianas no mundo: { data.world }</h1>
+                    <h2>Mundo: { data.world }</h2>
                     <main>
                         <header>
                             <h2>Cidade: { data.town }</h2>
