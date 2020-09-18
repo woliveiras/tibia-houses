@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { houses as housesEndpoint } from "../config/endpoints"
+import { housesEndpoint } from "./constants"
 import SearchResults from './SearchResults';
 
 const Search = props => {

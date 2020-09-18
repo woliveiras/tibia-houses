@@ -1,1 +1,0 @@
-export const houses = 'https://api.tibiadata.com/v2/houses/'
