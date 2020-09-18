@@ -1,12 +1,14 @@
 import React from 'react';
 
+import { SearchProvider } from './Search/Context'
+
 import Comparator from './Comparator'
 
 function App() {
   return (
-    <div>
+    <SearchProvider>
       <Comparator />
-    </div>
+    </SearchProvider>
   );
 }
 
