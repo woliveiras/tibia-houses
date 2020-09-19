@@ -4,7 +4,7 @@ import { SearchProvider } from './Search/Context'
 
 import Comparator from './Comparator'
 
-function App() {
+function App () {
   return (
     <SearchProvider>
       <Comparator />

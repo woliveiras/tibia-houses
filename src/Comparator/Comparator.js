@@ -2,7 +2,7 @@ import React from 'react'
 
 import { useSearch } from '../Search/Context'
 
-import {Search, Filters } from '../Search'
+import { Search, Filters } from '../Search'
 
 const Comparator = () => {
   const { searchParams } = useSearch()
