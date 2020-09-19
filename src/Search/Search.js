@@ -6,14 +6,14 @@ import { useSearch } from './Context';
 export const Search = () => {
     const { searchParams, setSearchParams } = useSearch()
     const { selectedWorld } = searchParams
-    const [ houses, setHouses ] = useState([])
+    const [ housesData, setHousesData ] = useState([])
 
     useEffect(() => { 
         async function fetchData() {
             await fetch(`${housesEndpoint}${selectedWorld}.json`)
                 .then(response => response.json())
                 .then(data => {
-                    setHouses(data.houses.houses)
+                    setHousesData(data.houses)
                 })
             }
 
@@ -23,13 +23,14 @@ export const Search = () => {
     useEffect(() => {
         setSearchParams({
             ...searchParams,
-            houses: houses
+            houses: housesData,
+            town: housesData?.town
         })
-    }, [houses])
+    }, [housesData])
 
     return (
         <div>
-            {houses && (
+            {housesData && (
                 <>
                     <h2>Mundo: { searchParams.selectedWorld }</h2>
                     <main>
@@ -37,8 +38,14 @@ export const Search = () => {
                             <h2>Cidade: { searchParams.town }</h2>
                         </header>
                         <ul>
-                            { searchParams.houses.map(house => 
-                                <li key={ house.name }>{ house.name }</li>
+                            { searchParams?.houses?.houses?.map(house => 
+                                <li key={ house.name }>
+                                    <div>
+                                        <p><strong>Nome: </strong>{ house.name }</p>
+                                        <p><strong>Preço: </strong>{ house.rent }</p>
+                                        <p><strong>Status: </strong>{ house.status }</p>
+                                    </div>
+                                </li>
                             )}
                         </ul>
                     </main>

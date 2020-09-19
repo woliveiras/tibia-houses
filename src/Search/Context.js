@@ -10,8 +10,6 @@ const SearchProvider = ({children}) => {
         houses: []
     })
 
-    console.log('Context:', searchParams)
-
     return (
         <SearchContext.Provider value={{searchParams, setSearchParams}}>
             {children}
