@@ -22,6 +22,7 @@
     "extends": "react-app"
   },
   "standard": {
+    "parser": "babel-eslint",
     "ignore": [
       "build/*"
     ],
@@ -29,7 +30,7 @@
       "jest",
       "es6",
       "browser"
-   ]
+    ]
   },
   "browserslist": {
     "production": [
@@ -44,6 +45,7 @@
     ]
   },
   "devDependencies": {
+    "babel-eslint": "^10.1.0",
     "standard": "^14.3.4"
   }
 }
