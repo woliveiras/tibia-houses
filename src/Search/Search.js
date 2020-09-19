@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
-import { housesEndpoint } from "./constants"
+import { housesEndpoint } from "./Search.config"
 import { useSearch } from './Context';
 
 export const Search = () => {
