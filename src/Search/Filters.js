@@ -1,8 +1,20 @@
 import React, { useEffect, useState } from 'react'
 
+import Select from '@material-ui/core/Select'
+import { makeStyles } from '@material-ui/core/styles'
+
 import { useSearch } from './Context'
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: '420px',
+    position: 'relative',
+    margin: '0 auto'
+  }
+}))
+
 export const Filters = props => {
+  const classes = useStyles()
   const { searchParams, setSearchParams } = useSearch()
   const { selectedWorld } = searchParams
   const [worlds, setWorlds] = useState([])
@@ -35,7 +47,8 @@ export const Filters = props => {
     }
 
     return (
-      <select
+      <Select
+        className={classes.root}
         value={selectedWorld}
         onChange={
           event =>
@@ -47,7 +60,7 @@ export const Filters = props => {
       >
         <option>Selecione o mundo</option>
         {worldsNamesList.map(world => (<option key={world}>{world}</option>))}
-      </select>
+      </Select>
     )
   }
 
