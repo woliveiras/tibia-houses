@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
 
 import { useSearch } from './Context'
 
@@ -7,7 +7,7 @@ export const Filters = props => {
     const { selectedWorld } = searchParams
     const [worlds, setWorlds] = useState([])
 
-    useEffect(() => { 
+    useEffect(() => {
         async function fetchData() {
             await fetch('https://api.tibiadata.com/v2/worlds.json')
                 .then(response => response.json())

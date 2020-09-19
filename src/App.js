@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 import { SearchProvider } from './Search/Context'
 
@@ -9,7 +9,7 @@ function App() {
     <SearchProvider>
       <Comparator />
     </SearchProvider>
-  );
+  )
 }
 
-export default App;
+export default App

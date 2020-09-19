@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
 
 import { housesEndpoint } from "./Search.config"
-import { useSearch } from './Context';
+import { useSearch } from './Context'
 
 export const Search = () => {
     const { searchParams, setSearchParams } = useSearch()
     const { selectedWorld } = searchParams
     const [ housesData, setHousesData ] = useState([])
 
-    useEffect(() => { 
+    useEffect(() => {
         async function fetchData() {
             await fetch(`${housesEndpoint}${selectedWorld}.json`)
                 .then(response => response.json())
