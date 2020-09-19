@@ -1,31 +1,49 @@
-import React, { useState, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { housesEndpoint } from "./constants"
-import SearchResults from './SearchResults';
+import { useSearch } from './Context';
 
-const Search = props => {
-    const [housesData, setHousesData] = useState({
-        world: 'carregando...',
-        houses: []
-    })
+export const Search = () => {
+    const { searchParams, setSearchParams } = useSearch()
+    const { selectedWorld } = searchParams
+    const [ houses, setHouses ] = useState([])
+
+    useEffect(() => { 
+        async function fetchData() {
+            await fetch(`${housesEndpoint}${selectedWorld}.json`)
+                .then(response => response.json())
+                .then(data => {
+                    setHouses(data.houses.houses)
+                })
+            }
+
+        fetchData()
+    }, [selectedWorld])
 
     useEffect(() => {
-        const { world } = props
-        
-        async function fetchData() {
-            await fetch(`${housesEndpoint}${world}.json`)
-                .then(response => response.json())
-                .then(data => setHousesData(data.houses))
-            }
-    
-      fetchData()
-    }, [props])
+        setSearchParams({
+            ...searchParams,
+            houses: houses
+        })
+    }, [houses])
 
     return (
         <div>
-            {housesData && (<SearchResults data={housesData} />)}
+            {houses && (
+                <>
+                    <h2>Mundo: { searchParams.selectedWorld }</h2>
+                    <main>
+                        <header>
+                            <h2>Cidade: { searchParams.town }</h2>
+                        </header>
+                        <ul>
+                            { searchParams.houses.map(house => 
+                                <li key={ house.name }>{ house.name }</li>
+                            )}
+                        </ul>
+                    </main>
+                </>
+            )}
         </div>
     )
 }
-
-export default Search

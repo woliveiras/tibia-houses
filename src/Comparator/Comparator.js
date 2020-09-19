@@ -1,14 +1,18 @@
 import React from 'react';
 
-import Search from '../Search'
-import Filters from '../Search/Filters'
+import { useSearch } from '../Search/Context'
+
+import {Search, Filters } from '../Search'
 
 const Comparator = () => {
+  const { searchParams } = useSearch()
+  const { selectedWorld } = searchParams
+
   return (
     <>
-      <h1>Casas Tibianas para aluguel</h1>
+      <h1>Casas Tibianas para aluguel em {selectedWorld}</h1>
       <Filters />
-      <Search world={'Antica'}/>
+      <Search />
     </>
   )
 }

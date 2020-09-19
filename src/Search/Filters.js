@@ -1,41 +1,55 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
-import { SearchContext, SearchDispatchContext } from './Context'
+import { useSearch } from './Context'
 
-const Filters = props => {
-    const searchDetails = useContext(SearchContext)
-    const setSearchDetails = useContext(SearchDispatchContext)
-    const [worlds, setWorlds] = useState({})
- 
-    useEffect(() => {       
+export const Filters = props => {
+    const { searchParams, setSearchParams } = useSearch()
+    const { selectedWorld } = searchParams
+    const [worlds, setWorlds] = useState([])
+
+    useEffect(() => { 
         async function fetchData() {
             await fetch('https://api.tibiadata.com/v2/worlds.json')
                 .then(response => response.json())
-                .then(data => setWorlds(data.worlds.allworlds))
+                .then(data => {
+                    setWorlds(data?.worlds?.allworlds)
+                })
             }
+
         fetchData()
     }, [])
 
-    const buildWorldList = worlds => {
-        let worldsList = []
+    useEffect(() => {
+        setSearchParams({
+            ...searchParams,
+            worlds: worlds
+        })
+    }, [worlds])
 
-        for (const world in worlds) {
-            worldsList.push(worlds[world].name)
+    const buildWorldList = worldsList => {
+        let worldsNamesList = []
+
+        for (const world in worldsList) {
+            worldsNamesList.push(worldsList[world].name)
         }
 
         return (
-            <select value={searchDetails.world} onChange={event => setSearchDetails({ world: event.currentTarget.value})}>
-                <option>Selecione o mundo</option>
-                {worldsList.map(world => (<option key={world}>{ world }</option>))}
+            <select 
+                value={selectedWorld} 
+                onChange={
+                    event => 
+                        setSearchParams({ 
+                            ...searchParams, 
+                            selectedWorld: event.currentTarget.value
+                        })
+                }>
+                    <option>Selecione o mundo</option>
+                    {worldsNamesList.map(world => (<option key={world}>{ world }</option>))}
             </select>
         )
     }
-      
+
     return (
-        <>
-            { worlds && buildWorldList(worlds) }
-        </>
+        <>{ worlds && buildWorldList(worlds) }</>
     )
 }
-
-export default Filters
