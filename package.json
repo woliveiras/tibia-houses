@@ -16,7 +16,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "./node_modules/.bin/standard",
-    "lint-fix": "./node_modules/.bin/standard --fix"
+    "lint:fix": "./node_modules/.bin/standard --fix"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -44,8 +44,15 @@
       "last 1 safari version"
     ]
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint:fix",
+      "pre-push": "yarn lint"
+    }
+  },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
+    "husky": "^4.3.0",
     "standard": "^14.3.4"
   }
 }
