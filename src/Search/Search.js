@@ -26,6 +26,7 @@ export const Search = () => {
             houses: housesData,
             town: housesData?.town
         })
+        // eslint-disable-next-line
     }, [housesData])
 
     return (

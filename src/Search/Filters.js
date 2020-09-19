@@ -24,6 +24,7 @@ export const Filters = props => {
             ...searchParams,
             worlds: worlds
         })
+        // eslint-disable-next-line
     }, [worlds])
 
     const buildWorldList = worldsList => {
