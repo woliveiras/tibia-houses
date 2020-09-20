@@ -3,15 +3,23 @@ import React, { createContext, useContext, useState } from 'react'
 const SearchContext = createContext({})
 
 const SearchProvider = ({ children }) => {
-  const [searchParams, setSearchParams] = useState({
-    selectedWorld: 'Antica',
-    town: '',
-    worlds: [],
-    houses: []
-  })
+  const [selectedWorld, setSelectedWorld] = useState('Antica')
+  const [selectedTown, setSelectedTown] = useState('')
+  const [worlds, setWorlds] = useState([])
+  const [houses, setHouses] = useState([])
+  const value = {
+    selectedWorld,
+    setSelectedWorld,
+    selectedTown,
+    setSelectedTown,
+    worlds,
+    setWorlds,
+    houses,
+    setHouses
+  }
 
   return (
-    <SearchContext.Provider value={{ searchParams, setSearchParams }}>
+    <SearchContext.Provider value={value}>
       {children}
     </SearchContext.Provider>
   )
@@ -20,8 +28,28 @@ const SearchProvider = ({ children }) => {
 const useSearch = () => {
   const context = useContext(SearchContext)
   if (!context) throw new Error('useSearch must be used within a ThemeProvider')
-  const { searchParams, setSearchParams } = context
-  return { searchParams, setSearchParams }
+
+  const {
+    selectedWorld,
+    setSelectedWorld,
+    selectedTown,
+    setSelectedTown,
+    worlds,
+    setWorlds,
+    houses,
+    setHouses
+  } = context
+
+  return {
+    selectedWorld,
+    setSelectedWorld,
+    selectedTown,
+    setSelectedTown,
+    worlds,
+    setWorlds,
+    houses,
+    setHouses
+  }
 }
 
-export { SearchProvider, SearchContext, useSearch }
+export { SearchProvider, useSearch }

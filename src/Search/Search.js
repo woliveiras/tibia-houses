@@ -35,8 +35,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const Search = () => {
   const classes = useStyles()
-  const { searchParams, setSearchParams } = useSearch()
-  const { selectedWorld } = searchParams
+  const { selectedWorld, houses, setHouses, selectedTown, setSelectedTown } = useSearch()
   const [housesData, setHousesData] = useState([])
 
   useEffect(() => {
@@ -52,25 +51,22 @@ export const Search = () => {
   }, [selectedWorld])
 
   useEffect(() => {
-    setSearchParams({
-      ...searchParams,
-      houses: housesData,
-      town: housesData?.town
-    })
+    setHouses(housesData)
+    setSelectedTown(housesData?.town)
     // eslint-disable-next-line
-    }, [housesData])
+  }, [housesData])
 
   return (
     <div>
       {housesData && (
         <>
-          <h2>Mundo: {searchParams.selectedWorld}</h2>
+          <h2>Mundo: {selectedWorld}</h2>
           <main>
             <header>
-              <h2>Cidade: {searchParams.town}</h2>
+              <h2>Cidade: {selectedTown}</h2>
             </header>
             <List className={classes.root}>
-              {searchParams?.houses?.houses?.map(house =>
+              {houses?.houses?.map(house =>
                 <ListItem className={classes.listItem} key={house.name}>
                   <Accordion className={classes.accordion}>
                     <AccordionSummary
@@ -81,11 +77,9 @@ export const Search = () => {
                       <Typography className={classes.heading}>{house.name}</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                      <Typography>
-                        <p><strong>Nome: </strong>{house.name}</p>
-                        <p><strong>Preço: </strong>{house.rent}</p>
-                        <p><strong>Status: </strong>{house.status}</p>
-                      </Typography>
+                      <Typography><strong>Nome: </strong>{house.name}</Typography>
+                      <Typography><strong>Preço: </strong>{house.rent}</Typography>
+                      <Typography><strong>Status: </strong>{house.status}</Typography>
                     </AccordionDetails>
                   </Accordion>
                 </ListItem>

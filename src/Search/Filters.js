@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 
 import Select from '@material-ui/core/Select'
 import { makeStyles } from '@material-ui/core/styles'
@@ -15,9 +15,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const Filters = props => {
   const classes = useStyles()
-  const { searchParams, setSearchParams } = useSearch()
-  const { selectedWorld } = searchParams
-  const [worlds, setWorlds] = useState([])
+  const { selectedWorld, setSelectedWorld, worlds, setWorlds } = useSearch()
 
   useEffect(() => {
     async function fetchData () {
@@ -29,42 +27,36 @@ export const Filters = props => {
     }
 
     fetchData()
+    // eslint-disable-next-line
   }, [])
 
   useEffect(() => {
-    setSearchParams({
-      ...searchParams,
-      worlds: worlds
-    })
+    setWorlds(worlds)
     // eslint-disable-next-line
     }, [worlds])
 
-  const buildWorldList = worldsList => {
-    const worldsNamesList = []
-
-    for (const world in worldsList) {
-      worldsNamesList.push(worldsList[world].name)
-    }
-
-    return (
-      <Select
-        className={classes.root}
-        value={selectedWorld}
-        onChange={
-          event =>
-            setSearchParams({
-              ...searchParams,
-              selectedWorld: event.currentTarget.value
-            })
-        }
-      >
-        <option>Selecione o mundo</option>
-        {worldsNamesList.map(world => (<option key={world}>{world}</option>))}
-      </Select>
-    )
-  }
-
   return (
-    <>{worlds && buildWorldList(worlds)}</>
+    <>
+      {worlds && (worlds => {
+        const worldsNamesList = []
+
+        for (const world in worlds) {
+          worldsNamesList.push(worlds[world].name)
+        }
+
+        return (
+          <Select
+            className={classes.root}
+            value={selectedWorld}
+            onChange={
+              event =>
+                setSelectedWorld(event.currentTarget.value)
+            }
+          >
+            {worldsNamesList.map(world => (<option key={world}>{world}</option>))}
+          </Select>
+        )
+      })}
+    </>
   )
 }
