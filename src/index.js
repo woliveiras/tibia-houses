@@ -14,10 +14,10 @@ TagMamager.initialize(gtmConfig)
 ReactDOM.render(
 
   <ThemeProvider theme={theme}>
-    <React.StrictMode>
+    <>
       <CssBaseline />
       <App />
-    </React.StrictMode>,
+    </>,
   </ThemeProvider>,
 
   document.getElementById('root')

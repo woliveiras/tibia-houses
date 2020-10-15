@@ -1,19 +1,19 @@
 import React from 'react'
-
 import Typography from '@material-ui/core/Typography'
 
-import { useSearch } from '../Search/Context'
-import { Search, Filters } from '../Search'
+import { Filters } from './FiltersContainer/Filters'
+import { Search } from './Search/Search'
+
+import { useComparator } from './Context'
 
 const Comparator = () => {
-  const { selectedWorld } = useSearch()
-
+  const { selectedWorld } = useComparator()
   return (
-    <>
-      <Typography variant='h1'>Casas Tibianas para aluguel em {selectedWorld}</Typography>
+    <header>
+      <Typography variant='h1'>Casas tibianas para aluguel em {selectedWorld}</Typography>
       <Filters />
       <Search />
-    </>
+    </header>
   )
 }
 

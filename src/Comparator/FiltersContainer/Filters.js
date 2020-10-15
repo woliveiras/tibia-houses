@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 
 import Select from '@material-ui/core/Select'
 import { makeStyles } from '@material-ui/core/styles'
 
-import { useSearch } from './Context'
+import { useComparator } from '../Context'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -13,9 +13,20 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
+const mountWorldList = worlds => {
+  const tmp = []
+
+  for (const world in worlds) {
+    tmp.push(worlds[world].name)
+  }
+
+  return tmp
+}
+
 export const Filters = props => {
+  const worldsNamesList = useRef([])
   const classes = useStyles()
-  const { selectedWorld, setSelectedWorld, worlds, setWorlds } = useSearch()
+  const { selectedWorld, setSelectedWorld, worlds, setWorlds } = useComparator()
 
   useEffect(() => {
     async function fetchData () {
@@ -32,31 +43,22 @@ export const Filters = props => {
 
   useEffect(() => {
     setWorlds(worlds)
+    worldsNamesList.current = mountWorldList(worlds)
     // eslint-disable-next-line
     }, [worlds])
 
   return (
     <>
-      {worlds && (worlds => {
-        const worldsNamesList = []
-
-        for (const world in worlds) {
-          worldsNamesList.push(worlds[world].name)
+      <Select
+        className={classes.root}
+        value={selectedWorld}
+        onChange={
+          event =>
+            setSelectedWorld(event.currentTarget.value)
         }
-
-        return (
-          <Select
-            className={classes.root}
-            value={selectedWorld}
-            onChange={
-              event =>
-                setSelectedWorld(event.currentTarget.value)
-            }
-          >
-            {worldsNamesList.map(world => (<option key={world}>{world}</option>))}
-          </Select>
-        )
-      })}
+      >
+        {worldsNamesList.current && worldsNamesList.current.map(world => (<option key={`item-${world}`} value={world}>{world}</option>))}
+      </Select>
     </>
   )
 }

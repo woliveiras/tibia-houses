@@ -9,8 +9,8 @@ import AccordionDetails from '@material-ui/core/AccordionDetails'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import Typography from '@material-ui/core/Typography'
 
-import { housesEndpoint } from './Search.config'
-import { useSearch } from './Context'
+import { housesEndpoint } from '../configs'
+import { useComparator } from '../Context'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const Search = () => {
   const classes = useStyles()
-  const { selectedWorld, houses, setHouses, selectedTown, setSelectedTown } = useSearch()
+  const { selectedWorld, houses, setHouses, selectedTown, setSelectedTown } = useComparator()
   const [housesData, setHousesData] = useState([])
 
   useEffect(() => {

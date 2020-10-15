@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useState } from 'react'
 
-const SearchContext = createContext({})
+const ComparatorContext = createContext({})
 
-const SearchProvider = ({ children }) => {
+const ComparatorProvider = ({ children }) => {
   const [selectedWorld, setSelectedWorld] = useState('Antica')
   const [selectedTown, setSelectedTown] = useState('')
   const [worlds, setWorlds] = useState([])
@@ -19,15 +19,15 @@ const SearchProvider = ({ children }) => {
   }
 
   return (
-    <SearchContext.Provider value={value}>
+    <ComparatorContext.Provider value={value}>
       {children}
-    </SearchContext.Provider>
+    </ComparatorContext.Provider>
   )
 }
 
-const useSearch = () => {
-  const context = useContext(SearchContext)
-  if (!context) throw new Error('useSearch must be used within a ThemeProvider')
+const useComparator = () => {
+  const context = useContext(ComparatorContext)
+  if (!context) throw new Error('useComparator must be used within a ThemeProvider')
 
   const {
     selectedWorld,
@@ -52,4 +52,4 @@ const useSearch = () => {
   }
 }
 
-export { SearchProvider, useSearch }
+export { ComparatorProvider, useComparator }
