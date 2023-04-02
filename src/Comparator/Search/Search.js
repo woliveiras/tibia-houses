@@ -39,15 +39,18 @@ export const Search = () => {
   const [housesData, setHousesData] = useState([])
 
   useEffect(() => {
-    async function fetchData () {
-      await fetch(`${housesEndpoint}${selectedWorld}.json`)
+    const abortController = new AbortController()
+    async function fetchData (_abortController) {
+      await fetch(`${housesEndpoint}${selectedWorld}.json`, { signal: _abortController.signal })
         .then(response => response.json())
         .then(data => {
           setHousesData(data.houses)
         })
     }
+    
+    fetchData(abortController)
 
-    fetchData()
+    return () => abortController.abort()
   }, [selectedWorld])
 
   useEffect(() => {
