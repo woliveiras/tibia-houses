@@ -29,15 +29,19 @@ export const Filters = props => {
   const { selectedWorld, setSelectedWorld, worlds, setWorlds } = useComparator()
 
   useEffect(() => {
-    async function fetchData () {
-      await fetch('https://api.tibiadata.com/v2/worlds.json')
+    const abortController = new AbortController()
+
+    async function fetchData (_abortController) {
+      await fetch('https://api.tibiadata.com/v2/worlds.json', { signal: _abortController.signal })
         .then(response => response.json())
         .then(data => {
           setWorlds(data?.worlds?.allworlds)
         })
     }
 
-    fetchData()
+    fetchData(abortController)
+    
+    return () => abortController.abort()
     // eslint-disable-next-line
   }, [])
 
